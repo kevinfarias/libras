@@ -10,7 +10,7 @@ class Predictor:
     def __init__(self, image_x = 64, image_y = 64):
         self.image_x = image_x
         self.image_y = image_y
-        self.classifier = load_model('../models/cnn_model_LIBRAS_20190606_0106.h5')
+        self.classifier = load_model('../models/other_models/model_epoch_48_98.6_final.h5')
 
     def predict(self, imgSrc):
         test_image = image.load_img(imgSrc, target_size=(self.image_x, self.image_y))
