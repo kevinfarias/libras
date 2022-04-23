@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WebSocker Client</title>
+
+</head>
+
+<body>
+
+    <button onclick="contactServer()">Click Here</button>
+
+    <div id="container">
+        <div id="greenSquare">
+
+        </div>
+        <video autoplay="true" id="videoElement">
+        
+        </video>
+    </div>
+
+</body>
+
+<script>
+
+    const socket = new WebSocket('ws://localhost:8000');
+
+socket.addEventListener('open', function (event) {
+
+    socket.send('Connection Established');
+
+});
+
+ 
+
+socket.addEventListener('message', function (event) {
+
+    console.log("hell raiser", event.data);
+
+});
+
+const contactServer = () => {
+
+    socket.send("Initialize");
+
+}
+
+</script>
+
+
+<script>
+    var video = document.querySelector("#videoElement");
+
+    if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+            video.srcObject = stream;
+        })
+        .catch(function (err0r) {
+            console.log("Something went wrong!");
+        });
+    }
+</script>
+
+<style>
+    #container {
+        margin: 0px auto;
+        width: 500px;
+        height: 375px;
+        border: 10px #333 solid;
+        position: relative;
+    }
+    #videoElement {
+        width: 500px;
+        height: 375px;
+        background-color: #666;
+    }
+    #greenSquare {
+        border: 3px solid green;
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 50px;
+        right: 30px;
+    }
+</style>
+
+</html>
