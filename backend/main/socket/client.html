@@ -12,6 +12,9 @@
 
     <title>WebSocket Client</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.0"></script>
+
 </head>
 
 <body>
@@ -30,6 +33,8 @@
     <br/><br/><br/><br/>
     <canvas id="canvas"></canvas>
     <br/><br/><br/><br/>
+    <canvas id="canvasWithoutBackground"></canvas>
+    <br/><br/><br/>
     <div id="result" class="glow">
         
     </div>
@@ -56,17 +61,49 @@ socket.addEventListener('message', function (event) {
     resultData.innerHTML = result;
 });
 
+
+const backgroundRemoval = async () => {
+    const canvas = document.querySelector('#canvas')
+
+    const net = await bodyPix.load({
+        architecture: 'ResNet50',
+        outputStride: 32,
+        quantBytes: 4
+    })
+    const segmentation = await net.segmentPerson(canvas, {
+        internalResolution: 'medium',
+        segmentationThreshold: 0.7,
+        scoreTreshold: 0.7
+    })
+
+    const ctx = canvas.getContext('2d')
+    const { data: imgData } = ctx.getImageData(0, 0, canvas.width, canvas.height)
+
+    const newImg = ctx.createImageData(canvas.width, canvas.height)
+    const newImgData = newImg.data
+
+    segmentation.data.forEach((segment, i) => {
+        if (segment == 1) {
+        newImgData[i * 4] = imgData[i * 4]
+        newImgData[i * 4 + 1] = imgData[i * 4 + 1]
+        newImgData[i * 4 + 2] = imgData[i * 4 + 2]
+        newImgData[i * 4 + 3] = imgData[i * 4 + 3]
+        }
+    })
+
+    ctx.putImageData(newImg, 0, 0);
+    alert("aee");
+}
+
 const contactServer = () => {
-
     socket.send("Initialize");
-
 }
 
 const video = document.querySelector("#videoElement");
 const canvas = document.querySelector('canvas');
 
-const width = 256;
-const height = 256;
+const width = 180;
+const height = 180;
 
 const widthFinal = 64;
 const heightFinal = 64;
@@ -79,13 +116,15 @@ if (navigator.mediaDevices.getUserMedia) {
         .then(function (stream) {
             video.srcObject = stream;
 
-            const sendInterval = setInterval(() => {
+            const sendInterval = setInterval(async () => {
                 canvas.getContext('2d').drawImage(video, 
                     30, 30, // Start at 30/39 pixels from the left and the top of the image (crop),
                     width, height, // "Get" a `50 * 50` (w * h) area from the source image (crop),
                     0, 0, // Place the result at 0, 0 in the canvas,
                     widthFinal, heightFinal  // With as width / height: 100 * 100 (scale)
                 );
+
+                // await backgroundRemoval();
 
                 const png = canvas.toDataURL();
                 socket.send(png)
@@ -97,6 +136,24 @@ if (navigator.mediaDevices.getUserMedia) {
 }
 </script>
 
+<script>
+    IMAGE_SRC = './img/8.jpg'
+
+    const loadImage = () => {
+        const img = new Image()
+        img.src = IMAGE_SRC
+
+        const canvas = document.querySelector('canvas')
+        const ctx = canvas.getContext('2d')
+
+        img.addEventListener('load', () => {
+            canvas.width = img.width
+            canvas.height = img.height
+            ctx.drawImage(img, 0, 0)
+            backgroundRemoval()
+        })
+    }
+</script>
 
 <style>
     #container {

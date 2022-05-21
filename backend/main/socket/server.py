@@ -12,7 +12,8 @@ import base64
 
 from PIL import Image 
 
-predictor = Predictor(os.path.abspath("../../models/other_models/model_epoch_48_98.6_final.h5"))
+predictor = Predictor(os.path.abspath("../../models/other_models/model_epoch_48_98.6_final.h5"), 64, 64, True)
+# predictor = Predictor(os.path.abspath("./models/new_cnn_model20220513_2150.h5"), 256, 256, True)
 # create handler for each connection
 
 async def handler(websocket, path):
