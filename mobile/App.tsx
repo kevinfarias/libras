@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import mainStyles from './styles/main';
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 export default function App() {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(CameraType.back);
+  const [hasPermission, setHasPermission] = useState(false);
+  const [cameraType, setCameraType] = useState(CameraType.back);
 
   useEffect(() => {
     (async () => {
@@ -13,6 +14,14 @@ export default function App() {
       setHasPermission(status === 'granted');
     })();
   }, []);
+
+  const __switchCamera = () => {
+    if (cameraType === 'back') {
+      setCameraType(CameraType.front)
+    } else {
+      setCameraType(CameraType.back)
+    }
+  }
 
   if (hasPermission === null) {
     return <View />;
@@ -22,15 +31,17 @@ export default function App() {
   }
   return (
     <View style={mainStyles.container}>
-      <Camera style={mainStyles.camera} type={type}>
-        <View style={mainStyles.buttonContainer}>
-          <TouchableOpacity
-            style={mainStyles.button}
-            onPress={() => {
-              setType(type === CameraType.back ? CameraType.front : CameraType.back);
-            }}>
-            <Text style={mainStyles.text}> Flip </Text>
-          </TouchableOpacity>
+      <Camera style={mainStyles.camera} type={cameraType}>
+        <View style={mainStyles.mainView}>
+            <View style={mainStyles.innerView}>
+                <View style={mainStyles.buttonBar}>
+                    <TouchableOpacity
+                        onPress={__switchCamera}
+                        style={mainStyles.innerButton}>
+                        <MaterialIcons name="flip-camera-android" size={48} color="black" />
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View>
       </Camera>
     </View>
