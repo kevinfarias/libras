@@ -16,6 +16,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         flexDirection: 'row'
     },
+    // greenSquare: {
+    //     width: 120,
+    //     height: 120,
+    //     border: "2px solid green",
+    //     position: "absolute",
+    //     background: "green",
+    //     left: 20,
+    //     bottom: 200,
+    //     zIndex: 999 
+    // },
     innerView: {
         position: 'absolute',
         bottom: 0,
