@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest-gpu
+FROM tensorflow/tensorflow:latest-devel-gpu
 
 WORKDIR /home/app
 
@@ -8,10 +8,10 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/
 
 RUN apt-get install ffmpeg libsm6 libxext6 libgl1-mesa-glx -y
 
+EXPOSE 9999
+
 COPY . .
 
 RUN pip install -r ./requirements.txt
 
-RUN cd ./main/socket
-
-CMD python ./server.py
+CMD python ./main/socket/server.py

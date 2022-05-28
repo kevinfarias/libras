@@ -16,6 +16,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         flexDirection: 'row'
     },
+    // greenSquare: {
+    //     width: 120,
+    //     height: 120,
+    //     border: "2px solid green",
+    //     position: "absolute",
+    //     background: "green",
+    //     left: 20,
+    //     bottom: 200,
+    //     zIndex: 999 
+    // },
     innerView: {
         position: 'absolute',
         bottom: 0,
@@ -40,6 +50,20 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+    },
+    resultDisplay: {
+        width: "100%",
+        fontSize: 30,
+        color: 'green',
+        bottom: 100,
+        textAlign: 'center',
+        justifyContent: "center",
+        alignItems: "center",
+        size: 30,
+    },
+    resultDisplayText: {
+        fontSize: 90,
+        size: 90,
     }
 }); 
 

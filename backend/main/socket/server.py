@@ -12,7 +12,9 @@ import base64
 
 from PIL import Image 
 
-predictor = Predictor(os.path.abspath("../../models/other_models/model_epoch_48_98.6_final.h5"), 64, 64, True)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+predictor = Predictor(os.path.abspath("./models/other_models/model_epoch_48_98.6_final.h5"), 64, 64, True)
 # predictor = Predictor(os.path.abspath("./models/new_cnn_model20220513_2150.h5"), 256, 256, True)
 # create handler for each connection
 
@@ -24,10 +26,11 @@ async def handler(websocket, path):
             data = await websocket.recv()
 
             try:
-                img_src = os.path.abspath("../../temp/img.png")
+                img_src = os.path.abspath("./temp/img.png")
                 
                 with open(img_src, "wb") as fh:
-                    fh.write(base64.urlsafe_b64decode(data[22:]))
+                    # fh.write(base64.urlsafe_b64decode(data[22:]))
+                    fh.write(base64.urlsafe_b64decode(data))
 
                 img_text = predictor.predict(img_src)[1]
                 reply = f"{i}: Data received as: {img_text}!"
@@ -42,7 +45,7 @@ async def handler(websocket, path):
 
  
 
-start_server = websockets.serve(handler, "localhost", 8000)
+start_server = websockets.serve(handler, "0.0.0.0", 9999)
 
 
 asyncio.get_event_loop().run_until_complete(start_server)

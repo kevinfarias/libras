@@ -4,7 +4,9 @@ services:
   backend:
     build: .
     image: kevinfarias/libras-backend:latest
+    tty: true
     ports:
-      - "8000:8000"
+      - "9999:9999"
     volumes:
       - .:/home/app
+      - /usr/local/lib/python3.8
