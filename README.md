@@ -3,7 +3,7 @@
 ## Introdução
   
 O projeto foi criado durante a disciplina de Libras lecionada durante o primeiro semestre do ano de 2022 na faculdade IMED.  
-Reunindo os conhecimentos obtidos dos alunos Kevin Farias e Leonardo Leonhardt sobre desenvolvimento mobile, python e redes neurais/machine learning e sentindo-se desafiados, foi desenvolvimento um projeto conceito para verificar se desenvolver um aplicativo que traduza libras em tempo real via machine learning era de fato possível.
+Reunindo os conhecimentos obtidos dos alunos Kevin Farias e Leonardo Leonhardt sobre desenvolvimento mobile, python e redes neurais/machine learning e sentindo-se desafiados, foi desenvolvido um projeto conceito para verificar se desenvolver um aplicativo que traduza libras em tempo real via machine learning era de fato possível com as tecnologias atuais.
 
 O resultado gerou um app que é pouco preciso e demanda diversas evoluções em sua rede neural, mas que já consegue identificar algumas letras do alfabeto em Libras como "C" ou "O".
   
