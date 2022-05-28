@@ -50,6 +50,20 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+    },
+    resultDisplay: {
+        width: "100%",
+        fontSize: 30,
+        color: 'green',
+        bottom: 100,
+        textAlign: 'center',
+        justifyContent: "center",
+        alignItems: "center",
+        size: 30,
+    },
+    resultDisplayText: {
+        fontSize: 90,
+        size: 90,
     }
 }); 
 
